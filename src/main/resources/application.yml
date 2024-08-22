@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: file-storage-service
+  datasource:
+    url: jdbc:postgresql://messages-db:5432/file-storage-db
+    username: postgres
+    password: 123
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  mvc:
+    validation:
+      enabled: true
+
+server:
+  port:
+    9010

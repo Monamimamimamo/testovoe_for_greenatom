@@ -1,0 +1,16 @@
+services:
+  file-storage-service:
+    image: monamimamimamo/file-storage-service:1.0
+    ports:
+      - "9010:9010"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://file-storage-db:5432/file-storage-db
+
+  file-storage-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: file-storage-db
+    ports:
+      - "5432:5432"
