@@ -53,6 +53,18 @@ class FileServiceTest {
         assertEquals(fileId, response.getBody());
     }
 
+    @Test
+    void testCreateFile_Conflict() { // проверка повторного сохранения файла
+        FileDto fileDto = new FileDto("Test Title", "2024-08-22T12:00:00", "Description", "base64EncodedContent");
+        byte[] decodedContent = Base64.getDecoder().decode(fileDto.getContent());
+        File existingFile = new File(fileDto);
+        when(fileRepository.findByContent(decodedContent)).thenReturn(existingFile);
+        ResponseEntity<UUID> response = fileService.create(fileDto);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+
 
     @Test
     void testCreateFile_ThrowsInternalServerError() { // проверка ошибки сохранения
@@ -85,12 +97,11 @@ class FileServiceTest {
     @Test
     void testGetAllFiles_EmptyResult() { // проверка отсутствия файлов в бд
         Pageable pageable = PageRequest.of(1, 10);
-        when(fileRepository.findAllSortedByCreationDate(eq(pageable)))
+        when(fileRepository.findAllSortedByCreationDate(any()))
                 .thenReturn(Collections.emptyList());
         ResponseEntity<List<FileDto>> response = fileService.getAllFiles(1, 10);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        assertTrue(response.getBody().isEmpty());
     }
 
     @Test

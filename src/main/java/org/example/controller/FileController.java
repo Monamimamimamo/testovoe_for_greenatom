@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.example.domain.dto.FileDto;
 import org.example.service.FileService;
+import org.example.service.FileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.UUID;
 public class FileController {
 
     @Autowired
-    private FileService fileService;
+    private FileServiceImpl fileService;
 
     @PostMapping("/create")
     public ResponseEntity<UUID> create(@Valid @RequestBody FileDto fileDto) {

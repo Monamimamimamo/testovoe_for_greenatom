@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,6 +25,9 @@ public class FileServiceImpl implements FileService {
 
     public ResponseEntity<UUID> create(FileDto fileDto) {
         try {
+            File existingFile = fileRepository.findByContent(Base64.getDecoder().decode(fileDto.getContent()));
+            if (existingFile != null)
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
             File file = new File(fileDto);
             fileRepository.save(file);
             return ResponseEntity.ok(file.getId());

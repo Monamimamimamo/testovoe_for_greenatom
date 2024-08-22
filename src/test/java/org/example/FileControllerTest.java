@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.controller.FileController;
 import org.example.domain.dto.FileDto;
 import org.example.service.FileService;
+import org.example.service.FileServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -33,7 +34,7 @@ class FileControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private FileService fileService;
+    private FileServiceImpl fileService;
 
     @Test
     void testCreateFile() throws Exception {

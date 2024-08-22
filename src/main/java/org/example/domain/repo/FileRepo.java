@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface FileRepo extends JpaRepository<File, UUID> {
     @Query("SELECT f FROM File f ORDER BY f.creationDate ASC")
     List<File> findAllSortedByCreationDate(Pageable pageable);
+
+    File findByContent(byte[] file);
 }
